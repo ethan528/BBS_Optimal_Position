@@ -1,21 +1,25 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_getx/view/mypage.dart';
+import 'package:flutter_getx/controller/auth_controller.dart';
+import 'package:flutter_getx/screens/login.dart';
+import 'package:get/get.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyPage(),
+    return GetMaterialApp(
+      theme: ThemeData(primaryColor: Colors.blue),
+      home: LoginPage(),
     );
   }
 }
