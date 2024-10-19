@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_getx/controller/auth_controller.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
 
+  var userController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
@@ -38,6 +41,27 @@ class SignupPage extends StatelessWidget {
                     style: GoogleFonts.bebasNeue(fontSize: 28)),
                 SizedBox(
                   height: 50,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: userController,
+                        decoration: InputDecoration(
+                            border: InputBorder.none, hintText: 'User'),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -88,7 +112,8 @@ class SignupPage extends StatelessWidget {
                           onTap: () {
                             AuthController.instance.register(
                                 emailController.text.trim(),
-                                passwordController.text.trim());
+                                passwordController.text.trim(),
+                                userController.text.trim());
                           },
                           child: Container(
                             child: Padding(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ class AuthController extends GetxController {
   late Rx<User?> _user;
   FirebaseAuth authentication = FirebaseAuth.instance;
   late RxBool isLoading = false.obs;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var userName = ''.obs;
 
   @override
   void onReady() {
@@ -26,15 +29,26 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => LoginPage());
     } else {
+      firestore.collection('user').doc(_user.value!.uid).get().then((doc) {
+        userName.value = doc['userName'];
+      }).catchError((e) {
+        print('Error: $e');
+      });
       Get.offAll(() => WelcomePage());
     }
   }
 
-  void register(String email, password) async {
+  void register(String email, String password, String name) async {
     try {
       isLoading.value = true;
       await authentication.createUserWithEmailAndPassword(
           email: email, password: password);
+      await FirebaseFirestore.instance
+          .collection('user')
+          .doc(_user.value!.uid)
+          .set({
+        'userName': name,
+      });
     } catch (e) {
       Get.snackbar(
         'Error message',
