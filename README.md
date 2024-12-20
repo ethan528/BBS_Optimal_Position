@@ -1,4 +1,4 @@
-# flutter_getx
+# flutter_getx_practice
 
 A new Flutter project.
 

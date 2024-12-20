@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_getx/controller/auth_controller.dart';
-import 'package:flutter_getx/screens/login.dart';
+import 'package:flutter_getx_practice/controller/auth_controller.dart';
+import 'package:flutter_getx_practice/screens/login.dart';
 import 'package:get/get.dart';
 
 import 'firebase_options.dart';
